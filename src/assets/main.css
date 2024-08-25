@@ -1,0 +1,39 @@
+@import './base.css';
+
+#app {
+  display: flex;
+  justify-content: center;
+
+
+  button:hover {
+    cursor: pointer;
+  }
+
+  input {
+    border: 1px solid rgb(56, 97, 119);
+    border-radius: 5px;
+    padding: 5px;
+    color: rgb(61, 61, 61);
+  }
+}
+
+.icon-btn {
+  background-color: #fff;
+  border: none;
+}
+
+.icon-btn>i,
+.icon-btn>span {
+  color: rgb(53, 97, 105);
+}
+
+.icon-btn>i:hover,
+.icon-btn>span:hover {
+  color: rgb(98, 178, 192);
+}
+
+
+
+@media (hover: hover) {}
+
+@media (min-width: 1024px) {}
