@@ -77,18 +77,18 @@ const closeModal = () => {
       display: flex;
       justify-content: space-between;
       align-items: center;
-    }
-
-    span {
-      flex-grow: 1;
-      text-align: left;
-      width: 100px;
-      white-space: normal;
-      word-wrap: break-word;
-    }
-    .buttons {
-      display: flex;
-      gap: 10px;
+      span {
+        font-size: 12px;
+        flex-grow: 1;
+        text-align: left;
+        width: 100px;
+        white-space: normal;
+        word-wrap: break-word;
+      }
+      .buttons {
+        display: flex;
+        gap: 10px;
+      }
     }
   }
 }
