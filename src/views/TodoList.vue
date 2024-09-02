@@ -1,6 +1,9 @@
 <template>
   <div class="container">
     <div class="main-content">
+      <div class="style-picker-container">
+        <TextStylePicker @update-style="updateTodoStyle" />
+      </div>
       <div class="todo-section">
         <input v-model="title" @blur="saveTitle" class="title-input" />
         <div class="todo-list">
@@ -22,6 +25,7 @@
             <li
               v-for="(todo, index) in todos"
               :key="index"
+              :style="todo.style"
               draggable="true"
               @dragstart="dragStart(index)"
               @dragover.prevent
@@ -30,9 +34,9 @@
             >
               <input type="checkbox" v-model="todo.completed" />
               <div>
-                <span v-if="!todo.editing" :class="{ completed: todo.completed }">{{
-                  todo.text
-                }}</span>
+                <span v-if="!todo.editing" :class="{ completed: todo.completed }">
+                  {{ todo.text }}
+                </span>
                 <input
                   v-else
                   v-model="todo.text"
@@ -78,6 +82,7 @@
 import { ref, onMounted, watch } from 'vue'
 import TrashBin from '@/components/TrashBin.vue'
 import SavedList from '@/components/SavedList.vue'
+import TextStylePicker from '@/components/TextStylePicker.vue'
 
 const title = ref('TodoList')
 const newTodo = ref('')
@@ -221,11 +226,21 @@ const removeSavedState = (index) => {
     currentSavedStateIndex.value = null
   }
 }
+
 const loadState = (index) => {
   const state = savedStates.value[index]
   title.value = state.title
   todos.value = JSON.parse(JSON.stringify(state.todos))
   currentSavedStateIndex.value = index
+}
+
+const updateTodoStyle = (style) => {
+  todos.value.forEach((todo) => {
+    if (!todo.style) {
+      todo.style = {}
+    }
+    Object.assign(todo.style, style)
+  })
 }
 </script>
 
@@ -233,21 +248,29 @@ const loadState = (index) => {
 .container {
   display: flex;
   justify-content: center;
+  padding: 20px;
 }
 
 .main-content {
   display: flex;
   align-items: flex-start;
+  gap: 20px; /* 间距以防止重叠 */
+}
+
+.style-picker-container {
+  width: 200px; /* 你可以根据需要调整 */
 }
 
 .todo-section {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  flex-grow: 1;
+  padding: 20px;
 }
 
 .saved-list-section {
   margin-left: 20px;
+  width: 300px; /* 你可以根据需要调整 */
 }
 
 .title-input {
@@ -301,6 +324,7 @@ ul {
       text-decoration: line-through;
       color: #888;
     }
+
     .actions {
       display: flex;
       justify-content: center;
@@ -317,6 +341,7 @@ ul {
 .add-todo {
   display: flex;
   margin-top: 10px;
+
   .icon-btn {
     margin-left: 10px;
   }
